@@ -1,0 +1,4 @@
+var searchIndex = JSON.parse('{\
+"wasmedge_paratime":{"doc":"","t":[3,11,11,11,11,11,11,11,11,11,11,11,11,11],"n":["Runtime","borrow","borrow_mut","deref","deref_mut","drop","from","genesis_state","init","into","try_from","try_into","type_id","vzip"],"q":["wasmedge_paratime","","","","","","","","","","","","",""],"d":["","","","","","","","","","","","","",""],"i":[0,1,1,1,1,1,1,1,1,1,1,1,1,1],"f":[null,[[]],[[]],[[["usize",15]]],[[["usize",15]]],[[["usize",15]]],[[]],[[]],[[],["usize",15]],[[]],[[],["result",4]],[[],["result",4]],[[],["typeid",3]],[[]]],"p":[[3,"Runtime"]]}\
+}');
+if (window.initSearch) {window.initSearch(searchIndex)};
