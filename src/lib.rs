@@ -1,4 +1,3 @@
-mod account;
 mod eth;
 
 #[cfg(test)]
