@@ -12,23 +12,7 @@
 <span id="9"> 9</span>
 <span id="10">10</span>
 <span id="11">11</span>
-<span id="12">12</span>
-<span id="13">13</span>
-<span id="14">14</span>
-<span id="15">15</span>
-<span id="16">16</span>
-<span id="17">17</span>
-<span id="18">18</span>
-<span id="19">19</span>
-<span id="20">20</span>
-<span id="21">21</span>
-<span id="22">22</span>
-<span id="23">23</span>
-<span id="24">24</span>
-<span id="25">25</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">rust_2018_idioms</span>, <span class="ident">unreachable_pub</span>)]</span>
-<span class="attribute">#![<span class="ident">forbid</span>(<span class="ident">unsafe_code</span>)]</span>
 <span class="kw">mod</span> <span class="ident">account</span>;
 <span class="kw">mod</span> <span class="ident">module</span>;
 
@@ -37,21 +21,9 @@
 
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
 <span class="kw">mod</span> <span class="ident">vm</span>;
-<span class="kw">use</span> <span class="ident">oasis_runtime_sdk</span> <span class="kw">as</span> <span class="ident">sdk</span>;
-<span class="kw">use</span> <span class="ident">once_cell::unsync::Lazy</span>;
 
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Runtime</span>;
-
-<span class="kw">impl</span> <span class="ident">sdk::Runtime</span> <span class="kw">for</span> <span class="ident">Runtime</span> {
-    <span class="kw">const</span> <span class="ident">VERSION</span>: <span class="ident">sdk::core::common::version::Version</span> <span class="op">=</span> <span class="macro">sdk::version_from_cargo!</span>();
-
-    <span class="kw">type</span> <span class="ident">Modules</span> <span class="op">=</span> (<span class="kw">crate</span><span class="ident">::module::Module</span>,);
-
-    <span class="kw">fn</span> <span class="ident">genesis_state</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Modules</span> <span class="kw">as</span> <span class="ident">sdk::module::MigrationHandler</span><span class="op">&gt;</span><span class="ident">::Genesis</span> {
-        <span class="kw">let</span> <span class="ident">genesis</span> <span class="op">=</span> <span class="ident">Lazy::new</span>(<span class="op">|</span><span class="op">|</span> <span class="kw">return</span> ());
-        (<span class="kw-2">*</span><span class="ident">genesis</span>,)
-    }
-}
+<span class="kw">mod</span> <span class="ident">runtime</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">runtime::Runtime</span>;
 </pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="wasmedge_paratime" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>
