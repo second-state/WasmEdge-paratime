@@ -8,10 +8,11 @@ pub struct Runtime;
 impl sdk::Runtime for Runtime {
     const VERSION: sdk::core::common::version::Version = sdk::version_from_cargo!();
 
-    type Modules = (super::module::Module,);
+    type Modules = (super::eth::Module, super::account::Module);
 
     fn genesis_state() -> <Self::Modules as sdk::module::MigrationHandler>::Genesis {
-        let genesis = Lazy::new(|| return ());
-        (*genesis,)
+        let eth_genesis = Lazy::new(|| return ());
+        let account_genesis = Lazy::new(|| return ());
+        (*eth_genesis, *account_genesis)
     }
 }

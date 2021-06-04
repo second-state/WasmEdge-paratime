@@ -1,5 +1,5 @@
 mod account;
-mod module;
+mod eth;
 
 #[cfg(test)]
 mod test;
