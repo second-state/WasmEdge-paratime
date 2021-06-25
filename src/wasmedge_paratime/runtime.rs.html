@@ -18,22 +18,78 @@
 <span id="15">15</span>
 <span id="16">16</span>
 <span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! WasmEdge Runtime</span>
 <span class="doccomment">//! WasmEdge is a runtime excute the Wasm and eWasm</span>
 <span class="kw">use</span> <span class="ident">oasis_runtime_sdk</span> <span class="kw">as</span> <span class="ident">sdk</span>;
 <span class="kw">use</span> <span class="ident">once_cell::unsync::Lazy</span>;
+<span class="kw">use</span> <span class="ident">sdk::types::token::Denomination</span>;
+<span class="kw">use</span> <span class="ident">std::collections::BTreeMap</span>;
 
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Runtime</span>;
 
 <span class="kw">impl</span> <span class="ident">sdk::Runtime</span> <span class="kw">for</span> <span class="ident">Runtime</span> {
     <span class="kw">const</span> <span class="ident">VERSION</span>: <span class="ident">sdk::core::common::version::Version</span> <span class="op">=</span> <span class="macro">sdk::version_from_cargo!</span>();
 
-    <span class="kw">type</span> <span class="ident">Modules</span> <span class="op">=</span> (<span class="kw">super</span><span class="ident">::module::Module</span>,);
+    <span class="kw">type</span> <span class="ident">Modules</span> <span class="op">=</span> (<span class="kw">super</span><span class="ident">::eth::Module</span>, <span class="ident">sdk::modules::accounts::Module</span>);
 
     <span class="kw">fn</span> <span class="ident">genesis_state</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Modules</span> <span class="kw">as</span> <span class="ident">sdk::module::MigrationHandler</span><span class="op">&gt;</span><span class="ident">::Genesis</span> {
-        <span class="kw">let</span> <span class="ident">genesis</span> <span class="op">=</span> <span class="ident">Lazy::new</span>(<span class="op">|</span><span class="op">|</span> <span class="kw">return</span> ());
-        (<span class="kw-2">*</span><span class="ident">genesis</span>,)
+        <span class="kw">let</span> <span class="ident">eth_genesis</span> <span class="op">=</span> <span class="ident">Lazy::new</span>(<span class="op">|</span><span class="op">|</span> <span class="kw">return</span> ());
+        (
+            <span class="kw-2">*</span><span class="ident">eth_genesis</span>,
+            <span class="ident">sdk::modules::accounts::Genesis</span> {
+                <span class="ident">balances</span>: {
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">balances</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
+                    <span class="comment">// Alice.</span>
+                    <span class="ident">balances</span>.<span class="ident">insert</span>(<span class="ident">sdk::testing::keys::alice::address</span>(), {
+                        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">denominations</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
+                        <span class="ident">denominations</span>.<span class="ident">insert</span>(<span class="ident">Denomination::NATIVE</span>, <span class="number">1_000_000</span>.<span class="ident">into</span>());
+                        <span class="ident">denominations</span>
+                    });
+                    <span class="comment">// Bob.</span>
+                    <span class="ident">balances</span>.<span class="ident">insert</span>(<span class="ident">sdk::testing::keys::bob::address</span>(), {
+                        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">denominations</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
+                        <span class="ident">denominations</span>.<span class="ident">insert</span>(<span class="ident">Denomination::NATIVE</span>, <span class="number">1_000_000</span>.<span class="ident">into</span>());
+                        <span class="ident">denominations</span>
+                    });
+                    <span class="ident">balances</span>
+                },
+                <span class="ident">total_supplies</span>: {
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">total_supplies</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
+                    <span class="ident">total_supplies</span>.<span class="ident">insert</span>(<span class="ident">Denomination::NATIVE</span>, <span class="number">3_000_000</span>.<span class="ident">into</span>());
+                    <span class="ident">total_supplies</span>
+                },
+                ..<span class="ident">Default::default</span>()
+            },
+        )
     }
 }
 </pre></div>
